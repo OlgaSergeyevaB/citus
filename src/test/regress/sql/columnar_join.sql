@@ -153,7 +153,8 @@ INSERT INTO tbl_cross_columnar VALUES (4, 40), (5, 50), (6, 60);
 
 SELECT h.id AS heap_id, h.val AS heap_val, c.id AS columnar_id, c.val AS columnar_val
 FROM tbl_cross_heap h
-CROSS JOIN tbl_cross_columnar c;
+CROSS JOIN tbl_cross_columnar c
+ORDER BY 3,4,1,2;
 
 -- End test case
 SET client_min_messages TO warning;
