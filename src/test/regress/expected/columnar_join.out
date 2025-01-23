@@ -69,9 +69,10 @@ INSERT INTO tbl_left_columnar VALUES (3), (5), (7);
 SELECT *
 FROM tbl_left_heap1 h1
 LEFT JOIN tbl_left_heap2 h2 ON h1.id = h2.id
-LEFT JOIN tbl_left_columnar c ON h2.id = c.id;
+LEFT JOIN tbl_left_columnar c ON h2.id = c.id
+ORDER BY 1;
  id | id | id 
-----+----+----
+---------------------------------------------------------------------
   1 |    |   
   2 |  2 |   
   3 |  3 |  3
@@ -89,9 +90,10 @@ SELECT *
 FROM tbl_left_filter_heap1 h1
 LEFT JOIN tbl_left_filter_heap2 h2 ON h1.id = h2.id
 LEFT JOIN tbl_left_filter_columnar c ON h2.id = c.id
-WHERE h1.id > 2;
+WHERE h1.id > 2
+ORDER BY 1;
  id | id | id 
-----+----+----
+---------------------------------------------------------------------
   3 |  3 |  3
   4 |    |   
 (2 rows)
@@ -106,9 +108,10 @@ INSERT INTO tbl_right_columnar VALUES (3), (5), (7);
 SELECT *
 FROM tbl_right_heap1 h1
 RIGHT JOIN tbl_right_heap2 h2 ON h1.id = h2.id
-RIGHT JOIN tbl_right_columnar c ON h2.id = c.id;
+RIGHT JOIN tbl_right_columnar c ON h2.id = c.id
+ORDER BY 3;
  id | id | id 
-----+----+----
+---------------------------------------------------------------------
   3 |  3 |  3
     |  5 |  5
     |    |  7
@@ -125,9 +128,10 @@ SELECT *
 FROM tbl_right_filter_heap1 h1
 RIGHT JOIN tbl_right_filter_heap2 h2 ON h1.id = h2.id
 RIGHT JOIN tbl_right_filter_columnar c ON h2.id = c.id
-WHERE c.id < 6;
+WHERE c.id < 6
+ORDER BY 3;
  id | id | id 
-----+----+----
+---------------------------------------------------------------------
   3 |  3 |  3
     |  5 |  5
 (2 rows)
@@ -142,9 +146,10 @@ INSERT INTO tbl_columnar SELECT generate_series(75, 125), generate_series(200, 2
 SELECT h1.id, h1.val, h2.val, c.val
 FROM tbl_heap1 h1
 JOIN tbl_heap2 h2 ON h1.val = h2.val
-JOIN tbl_columnar c ON h1.val = c.id;
+JOIN tbl_columnar c ON h1.val = c.id
+ORDER BY 1;
  id  | val | val | val 
------+-----+-----+-----
+---------------------------------------------------------------------
   75 |  75 |  75 | 200
   76 |  76 |  76 | 201
   77 |  77 |  77 | 202
@@ -180,9 +185,10 @@ INSERT INTO tbl_null_heap VALUES (1, NULL), (2, 20), (3, 30);
 INSERT INTO tbl_null_columnar VALUES (1, 100), (NULL, 200), (3, 300);
 SELECT nh.id, nh.val, nc.val
 FROM tbl_null_heap nh
-FULL OUTER JOIN tbl_null_columnar nc ON nh.id = nc.id;
+FULL OUTER JOIN tbl_null_columnar nc ON nh.id = nc.id
+ORDER BY 1;
  id | val | val 
-----+-----+-----
+---------------------------------------------------------------------
   1 |     | 100
   2 |  20 |    
   3 |  30 | 300
@@ -200,7 +206,7 @@ LEFT JOIN tbl_agg_columnar ac ON ah.val = ac.id
 GROUP BY ah.val
 ORDER BY ah.val;
  heap_val | columnar_count 
-----------+----------------
+---------------------------------------------------------------------
         1 |              0
         2 |              0
         3 |              0
@@ -311,9 +317,10 @@ INSERT INTO tbl_filter_columnar SELECT generate_series(90, 120), generate_series
 SELECT fh.id, fh.val, fc.val
 FROM tbl_filter_heap fh
 INNER JOIN tbl_filter_columnar fc ON fh.id = fc.id
-WHERE fh.val > 1050 AND fc.val < 2025;
+WHERE fh.val > 1050 AND fc.val < 2025
+ORDER BY 1;
  id  | val  | val  
------+------+------
+---------------------------------------------------------------------
   90 | 1090 | 2001
   91 | 1091 | 2002
   92 | 1092 | 2003
@@ -337,7 +344,7 @@ FROM tbl_cross_heap h
 CROSS JOIN tbl_cross_columnar c
 ORDER BY 3,4,1,2;
  heap_id | heap_val | columnar_id | columnar_val 
----------+----------+-------------+--------------
+---------------------------------------------------------------------
        1 |       10 |           4 |           40
        2 |       20 |           4 |           40
        3 |       30 |           4 |           40

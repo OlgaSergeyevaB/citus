@@ -47,7 +47,8 @@ INSERT INTO tbl_left_columnar VALUES (3), (5), (7);
 SELECT *
 FROM tbl_left_heap1 h1
 LEFT JOIN tbl_left_heap2 h2 ON h1.id = h2.id
-LEFT JOIN tbl_left_columnar c ON h2.id = c.id;
+LEFT JOIN tbl_left_columnar c ON h2.id = c.id
+ORDER BY 1;
 
 -- Left Join with Filter
 CREATE TABLE tbl_left_filter_heap1 (id integer);
@@ -62,7 +63,8 @@ SELECT *
 FROM tbl_left_filter_heap1 h1
 LEFT JOIN tbl_left_filter_heap2 h2 ON h1.id = h2.id
 LEFT JOIN tbl_left_filter_columnar c ON h2.id = c.id
-WHERE h1.id > 2;
+WHERE h1.id > 2
+ORDER BY 1;
 
 
 -- Right Join with Mixed Table Types
@@ -77,7 +79,8 @@ INSERT INTO tbl_right_columnar VALUES (3), (5), (7);
 SELECT *
 FROM tbl_right_heap1 h1
 RIGHT JOIN tbl_right_heap2 h2 ON h1.id = h2.id
-RIGHT JOIN tbl_right_columnar c ON h2.id = c.id;
+RIGHT JOIN tbl_right_columnar c ON h2.id = c.id
+ORDER BY 3;
 
 -- Right Join with Filters
 CREATE TABLE tbl_right_filter_heap1 (id integer);
@@ -92,7 +95,8 @@ SELECT *
 FROM tbl_right_filter_heap1 h1
 RIGHT JOIN tbl_right_filter_heap2 h2 ON h1.id = h2.id
 RIGHT JOIN tbl_right_filter_columnar c ON h2.id = c.id
-WHERE c.id < 6;
+WHERE c.id < 6
+ORDER BY 3;
 
 
 -- Inner Join with Mixed Table Types
@@ -106,7 +110,8 @@ INSERT INTO tbl_columnar SELECT generate_series(75, 125), generate_series(200, 2
 SELECT h1.id, h1.val, h2.val, c.val
 FROM tbl_heap1 h1
 JOIN tbl_heap2 h2 ON h1.val = h2.val
-JOIN tbl_columnar c ON h1.val = c.id;
+JOIN tbl_columnar c ON h1.val = c.id
+ORDER BY 1;
 
 -- Outer Join with NULLs
 CREATE TABLE tbl_null_heap (id integer, val integer);
@@ -117,7 +122,8 @@ INSERT INTO tbl_null_columnar VALUES (1, 100), (NULL, 200), (3, 300);
 
 SELECT nh.id, nh.val, nc.val
 FROM tbl_null_heap nh
-FULL OUTER JOIN tbl_null_columnar nc ON nh.id = nc.id;
+FULL OUTER JOIN tbl_null_columnar nc ON nh.id = nc.id
+ORDER BY 1;
 
 -- Join with Aggregates
 CREATE TABLE tbl_agg_heap (id serial primary key, val integer);
@@ -142,7 +148,8 @@ INSERT INTO tbl_filter_columnar SELECT generate_series(90, 120), generate_series
 SELECT fh.id, fh.val, fc.val
 FROM tbl_filter_heap fh
 INNER JOIN tbl_filter_columnar fc ON fh.id = fc.id
-WHERE fh.val > 1050 AND fc.val < 2025;
+WHERE fh.val > 1050 AND fc.val < 2025
+ORDER BY 1;
 
 -- Cross Join
 CREATE TABLE tbl_cross_heap (id integer, val integer);
