@@ -71,12 +71,12 @@ FROM tbl_left_heap1 h1
 LEFT JOIN tbl_left_heap2 h2 ON h1.id = h2.id
 LEFT JOIN tbl_left_columnar c ON h2.id = c.id
 ORDER BY 1;
- id | id | id 
+ id | id | id
 ---------------------------------------------------------------------
-  1 |    |   
-  2 |  2 |   
+  1 |    |
+  2 |  2 |
   3 |  3 |  3
-  4 |    |   
+  4 |    |
 (4 rows)
 
 -- Left Join with Filter
@@ -92,10 +92,10 @@ LEFT JOIN tbl_left_filter_heap2 h2 ON h1.id = h2.id
 LEFT JOIN tbl_left_filter_columnar c ON h2.id = c.id
 WHERE h1.id > 2
 ORDER BY 1;
- id | id | id 
+ id | id | id
 ---------------------------------------------------------------------
   3 |  3 |  3
-  4 |    |   
+  4 |    |
 (2 rows)
 
 -- Right Join with Mixed Table Types
@@ -110,7 +110,7 @@ FROM tbl_right_heap1 h1
 RIGHT JOIN tbl_right_heap2 h2 ON h1.id = h2.id
 RIGHT JOIN tbl_right_columnar c ON h2.id = c.id
 ORDER BY 3;
- id | id | id 
+ id | id | id
 ---------------------------------------------------------------------
   3 |  3 |  3
     |  5 |  5
@@ -130,7 +130,7 @@ RIGHT JOIN tbl_right_filter_heap2 h2 ON h1.id = h2.id
 RIGHT JOIN tbl_right_filter_columnar c ON h2.id = c.id
 WHERE c.id < 6
 ORDER BY 3;
- id | id | id 
+ id | id | id
 ---------------------------------------------------------------------
   3 |  3 |  3
     |  5 |  5
@@ -148,7 +148,7 @@ FROM tbl_heap1 h1
 JOIN tbl_heap2 h2 ON h1.val = h2.val
 JOIN tbl_columnar c ON h1.val = c.id
 ORDER BY 1;
- id  | val | val | val 
+ id  | val | val | val
 ---------------------------------------------------------------------
   75 |  75 |  75 | 200
   76 |  76 |  76 | 201
@@ -187,10 +187,10 @@ SELECT nh.id, nh.val, nc.val
 FROM tbl_null_heap nh
 FULL OUTER JOIN tbl_null_columnar nc ON nh.id = nc.id
 ORDER BY 1;
- id | val | val 
+ id | val | val
 ---------------------------------------------------------------------
   1 |     | 100
-  2 |  20 |    
+  2 |  20 |
   3 |  30 | 300
     |     | 200
 (4 rows)
@@ -205,7 +205,7 @@ FROM tbl_agg_heap ah
 LEFT JOIN tbl_agg_columnar ac ON ah.val = ac.id
 GROUP BY ah.val
 ORDER BY ah.val;
- heap_val | columnar_count 
+ heap_val | columnar_count
 ---------------------------------------------------------------------
         1 |              0
         2 |              0
@@ -319,7 +319,7 @@ FROM tbl_filter_heap fh
 INNER JOIN tbl_filter_columnar fc ON fh.id = fc.id
 WHERE fh.val > 1050 AND fc.val < 2025
 ORDER BY 1;
- id  | val  | val  
+ id  | val  | val
 ---------------------------------------------------------------------
   90 | 1090 | 2001
   91 | 1091 | 2002
@@ -343,7 +343,7 @@ SELECT h.id AS heap_id, h.val AS heap_val, c.id AS columnar_id, c.val AS columna
 FROM tbl_cross_heap h
 CROSS JOIN tbl_cross_columnar c
 ORDER BY 3,4,1,2;
- heap_id | heap_val | columnar_id | columnar_val 
+ heap_id | heap_val | columnar_id | columnar_val
 ---------------------------------------------------------------------
        1 |       10 |           4 |           40
        2 |       20 |           4 |           40
