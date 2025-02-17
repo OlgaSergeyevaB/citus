@@ -163,6 +163,22 @@ FROM tbl_cross_heap h
 CROSS JOIN tbl_cross_columnar c
 ORDER BY 3,4,1,2;
 
+-- Left Join with Mixed Table Types and columnar in the middle
+CREATE TABLE tbl_middle_left_heap1 (id integer);
+CREATE TABLE tbl_middle_left_heap2 (id integer);
+CREATE TABLE tbl_middle_left_columnar (id integer) USING columnar;
+
+INSERT INTO tbl_middle_left_heap1 VALUES (1), (2), (3), (4);
+INSERT INTO tbl_middle_left_heap2 VALUES (2), (3), (5), (6);
+INSERT INTO tbl_middle_left_columnar VALUES (3), (5), (7);
+
+EXPLAIN (COSTS OFF)
+SELECT h1.*, h2.*, c.*
+FROM tbl_middle_left_heap1 h1
+LEFT JOIN tbl_middle_left_columnar c ON h1.id = c.id
+LEFT JOIN tbl_middle_left_heap2 h2 ON c.id = h2.id
+ORDER BY 1;
+
 -- End test case
 SET client_min_messages TO warning;
 DROP SCHEMA am_columnar_join CASCADE;
